@@ -12,16 +12,19 @@ private:
 
 	Deck gameDeck;
 	int *shuffleDeck;
+	int nrOfDealedCards;
 	Player Pone;
 	Player Ptwo;
+	int* shuffleCards();
+	bool duplicate(const int* Deck, const int size, const int nrTCheck) const;
 
 public:
 
 	Game();
 	~Game();
-	int* shuffleCards(const int size);
-	bool duplicate(const int* Deck, const int size, const int nrTCheck) const;
-	string getCard(const int position) const;
+	string getCard(const int player) const;
+	void dealCard(const int player);
+	void resetGame();
 
 };
 

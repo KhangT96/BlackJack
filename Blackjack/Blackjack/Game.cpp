@@ -1,17 +1,18 @@
 #include "Game.h"
 
 Game::Game() {
-	this->shuffleDeck = shuffleCards(52);
+	this->shuffleDeck = new int[52];
+	this->nrOfDealedCards = 0;
+	shuffleCards();
 }
 
 Game::~Game() {
 	delete this->shuffleDeck;
 }
 
-int* Game::shuffleCards(const int size) {
+int* Game::shuffleCards() {
 	srand(time(NULL));
-	int *shuffleDeck = new int[size];
-	int deal = 0; int runtime = size; int nrCDealed = 0;
+	int deal = 0; int runtime = 52; int nrCDealed = 0;
 	for (int i = 0; i < runtime; i++) {
 		deal = rand() % 52;
 		if (duplicate(shuffleDeck, nrCDealed, deal)) {
@@ -35,7 +36,38 @@ bool Game::duplicate(const int * Deck, const int size, const int nrTCheck) const
 	return duplicated;
 }
 
-string Game::getCard(const int position) const
+string Game::getCard(const int player) const
 {
-	return this->gameDeck.toString(shuffleDeck[position]);
+	stringstream output;
+	if (player == 1) {
+		int *holder = this->Pone.getHand();
+		for (int i = 0; i < this->Pone.getNOC(); i++) {
+			output << this->gameDeck.toString(this->shuffleDeck[holder[i]]);
+		}
+	}
+	else {
+		int *holder = this->Ptwo.getHand();
+		for (int i = 0; i < this->Ptwo.getNOC(); i++) {
+			output << this->gameDeck.toString(this->shuffleDeck[holder[i]]);
+		}
+	}
+	return output.str();
+}
+
+void Game::dealCard(const int player) {
+	if (nrOfDealedCards < 52) {
+		if (player == 1) {
+			this->Pone.setHand(nrOfDealedCards++);
+		}
+		else {
+			this->Ptwo.setHand(nrOfDealedCards++);
+		}
+	}
+}
+
+void Game::resetGame() {
+	this->Pone.setNOC(0);
+	this->Ptwo.setNOC(0);
+	this->nrOfDealedCards = 0;
+	shuffleCards();
 }

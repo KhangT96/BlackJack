@@ -1,6 +1,5 @@
 ﻿  system.cpp
-  Game.cpp
-c:\users\khang\documents\github\blackjack\blackjack\blackjack\game.cpp(12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  functions.cpp
   Generating Code...
   Blackjack.vcxproj -> C:\Users\Khang\Documents\GitHub\BlackJack\Blackjack\Debug\Blackjack.exe
   Blackjack.vcxproj -> C:\Users\Khang\Documents\GitHub\BlackJack\Blackjack\Debug\Blackjack.pdb (Full PDB)
