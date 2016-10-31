@@ -3,3 +3,4 @@
 #include <time.h>  
 
 void start();
+void playerInfo(Game &game);

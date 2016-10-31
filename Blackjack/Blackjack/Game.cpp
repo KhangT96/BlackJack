@@ -3,11 +3,28 @@
 Game::Game() {
 	this->shuffleDeck = new int[52];
 	this->nrOfDealedCards = 0;
+	this->nrOfplayers = 0;
 	shuffleCards();
 }
 
 Game::~Game() {
 	delete this->shuffleDeck;
+}
+
+void Game::setPlayerInfo(const int player, const string &name, const int money)
+{
+	if (player == 1) {
+		this->Pone.setName(name);
+		this->Pone.setCM(money);
+	}
+	else {
+		this->Ptwo.setName(name);
+		this->Ptwo.setCM(money);
+	}
+}
+
+void Game::setnrOfPlayer(const int NOP){
+	this->nrOfplayers = NOP;
 }
 
 int* Game::shuffleCards() {
