@@ -1,37 +1,26 @@
 #include "functions.h"
 
 void start() {
-	Deck spelkort;
-	int *shuffleDeck = shuffleCards(52);
-	for (int i = 0; i < 52; i++) {
-		cout << "[" << i << "]" << spelkort.toString(shuffleDeck[i]);
-	}
-	delete shuffleDeck;
+	Game game;
+	playerInfo(game);
+	game.dealCard(1);
+	game.dealCard(2);
+	cout << game.getCard(1);
+	cout << game.getCard(2);
 }
 
-int* shuffleCards(const int size) {
-	srand(time(NULL));
-	int *shuffleDeck = new int[size];
-	int deal = 0; int runtime = size; int nrCDealed = 0;
-	for (int i = 0; i < runtime; i++) {
-		deal = rand() % 52;
-		if (duplicate(shuffleDeck, nrCDealed, deal)) {
-			runtime++;
-		}
-		else {
-			shuffleDeck[nrCDealed++] = deal;
-		}
+void playerInfo(Game &game) {
+	int nrOfPlayers = 0; int money = 0; string name = "";
+	cout << "How many player?[1 or 2]\n";
+	cin >> nrOfPlayers; game.setnrOfPlayer(nrOfPlayers);
+	for (int i = 0; i < nrOfPlayers; i++) {
+		system("cls");
+		cin.ignore();
+		cout << "Player " << i + 1 << " name?\n";
+		getline(cin, name);
+		cout << "Player " << i + 1 << " money?\n";
+		cin >> money;
+		game.setPlayerInfo(i + 1, name, money);
 	}
-	return shuffleDeck;
-}
-
-bool duplicate(const int* Deck, const int size, const int nrTCheck)
-{
-	bool duplicated = false;
-	for (int i = 0; i < size && duplicated == false; i++) {
-		if (nrTCheck == Deck[i]) {
-			duplicated = true;
-		}
-	}
-	return duplicated;
+	system("pause");
 }
