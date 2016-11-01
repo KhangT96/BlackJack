@@ -27,6 +27,10 @@ void Game::setnrOfPlayer(const int NOP){
 	this->nrOfplayers = NOP;
 }
 
+int Game::getnrOfPlayer() const {
+	return this->nrOfplayers;
+}
+
 int* Game::shuffleCards() {
 	srand(time(NULL));
 	int deal = 0; int runtime = 52; int nrCDealed = 0;
@@ -53,7 +57,7 @@ bool Game::duplicate(const int * Deck, const int size, const int nrTCheck) const
 	return duplicated;
 }
 
-string Game::getCard(const int player) const
+string Game::showCards(const int player) const
 {
 	stringstream output;
 	if (player == 1) {
@@ -69,6 +73,17 @@ string Game::getCard(const int player) const
 		}
 	}
 	return output.str();
+}
+
+string Game::showPlayerName(const int player) const {
+	string name = "";
+	if (player == 1) {
+		name = Pone.getName();
+	}
+	else {
+		name = Ptwo.getName();
+	}
+	return name;
 }
 
 void Game::dealCard(const int player) {
@@ -87,4 +102,38 @@ void Game::resetGame() {
 	this->Ptwo.setNOC(0);
 	this->nrOfDealedCards = 0;
 	shuffleCards();
+}
+
+int Game::TotPoints(const int player){
+	int totPoints = 0;
+	if (player == 1) {
+		int *holder = this->Pone.getHand();
+		for (int i = 0; i < this->Pone.getNOC(); i++) {
+			totPoints = caculatePoints(totPoints, this->gameDeck.getValue(this->shuffleDeck[holder[i]]));
+		}
+	}
+	else {
+		int *holder = this->Ptwo.getHand();
+		for (int i = 0; i < this->Ptwo.getNOC(); i++) {
+			totPoints = caculatePoints(totPoints, this->gameDeck.getValue(this->shuffleDeck[holder[i]]));
+		}
+	}
+	return totPoints;
+}
+
+int Game::caculatePoints(const int totPoints, const int currentvalue) {
+	int Points = 0;
+	if (currentvalue > 10) {
+		Points = totPoints + 10;
+	}
+	else if (currentvalue > 1) {
+		Points = totPoints + currentvalue;
+	}
+	else {
+		Points = totPoints + 11;
+		if (Points > 21) {
+			Points = Points - 10;
+		}
+	}
+	return Points;
 }

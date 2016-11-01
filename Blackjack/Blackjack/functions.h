@@ -4,3 +4,5 @@
 
 void start();
 void playerInfo(Game &game);
+void dealing(Game &game);
+void showPCards(Game &Game);

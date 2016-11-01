@@ -24,9 +24,14 @@ public:
 	~Game();
 	void setPlayerInfo(const int player, const string &name, const int money);
 	void setnrOfPlayer(const int NOP);
-	string getCard(const int player) const;
+	int getnrOfPlayer() const;
+	string showCards(const int player) const;
+	string showPlayerName(const int player) const;
 	void dealCard(const int player);
 	void resetGame();
+	int TotPoints(const int player);
+	int caculatePoints(const int totPoints, const int currentvalue);
+
 
 };
 
