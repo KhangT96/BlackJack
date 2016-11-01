@@ -19,7 +19,7 @@ Deck::Deck() {
 			else {
 				type = "Heart";
 			}
-			this->deck[current++] = new Card(type, i);
+			this->deck[current++] = new Card(type, i + 1);
 		}
 	}
 }
@@ -29,6 +29,10 @@ Deck::~Deck() {
 		delete this->deck[i];
 	}
 	delete this->deck;
+}
+
+int Deck::getValue(const int position) const{
+	return this->deck[position]->getValue();
 }
 
 string Deck::toString(const int position) const{

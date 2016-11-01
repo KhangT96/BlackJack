@@ -13,6 +13,7 @@ private:
 public:
 	Deck();
 	~Deck();
+	int getValue(const int posistion) const;
 	string toString(const int position) const;
 
 };

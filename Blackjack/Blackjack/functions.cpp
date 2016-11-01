@@ -3,10 +3,8 @@
 void start() {
 	Game game;
 	playerInfo(game);
-	game.dealCard(1);
-	game.dealCard(2);
-	cout << game.getCard(1);
-	cout << game.getCard(2);
+	dealing(game);
+
 }
 
 void playerInfo(Game &game) {
@@ -23,4 +21,24 @@ void playerInfo(Game &game) {
 		game.setPlayerInfo(i + 1, name, money);
 	}
 	system("pause");
+}
+
+void dealing(Game &game){
+	for (int i = 0; i < game.getnrOfPlayer(); i++) {
+		game.dealCard(i + 1);
+		game.dealCard(i + 1);
+	}
+	showPCards(game);
+	for (int i = 0; i < game.getnrOfPlayer(); i++) {
+
+	}
+}
+
+void showPCards(Game &game) {
+	system("cls");
+	for (int i = 0; i < game.getnrOfPlayer(); i++) {
+		cout << "[" << game.showPlayerName(i + 1) << "]" << endl;
+		cout << game.showCards(i + 1); 
+		cout << "[Points] " << game.TotPoints(i + 1) << endl;
+	}
 }
