@@ -5,4 +5,5 @@
 void start();
 void playerInfo(Game &game);
 void dealing(Game &game);
-void showPCards(Game &Game);
+void showPCards(Game &game);
+void detectLoseWin(Game &game);

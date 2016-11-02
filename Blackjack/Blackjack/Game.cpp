@@ -27,8 +27,33 @@ void Game::setnrOfPlayer(const int NOP){
 	this->nrOfplayers = NOP;
 }
 
+void Game::setplayerMoney(const int player, const int money) {
+	if (player == 1) {
+		Pone.setCM(money);
+	}
+	else {
+		Ptwo.setCM(money);
+	}
+}
+
 int Game::getnrOfPlayer() const {
 	return this->nrOfplayers;
+}
+
+int Game::getPlayerNOC(const int player) const {
+	int nrofCards = Ptwo.getNOC();
+	if (player == 1) {
+		nrofCards = Pone.getNOC();
+	}
+	return nrofCards;
+}
+
+int Game::getPlayerMoney(const int player) const {
+	int playermoney = Ptwo.getCM();
+	if (player == 1) {
+		playermoney = Pone.getCM();
+	}
+	return playermoney;
 }
 
 int* Game::shuffleCards() {

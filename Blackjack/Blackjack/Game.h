@@ -24,7 +24,10 @@ public:
 	~Game();
 	void setPlayerInfo(const int player, const string &name, const int money);
 	void setnrOfPlayer(const int NOP);
+	void setplayerMoney(const int player, const int money);
 	int getnrOfPlayer() const;
+	int getPlayerNOC(const int player) const;
+	int getPlayerMoney(const int player) const;
 	string showCards(const int player) const;
 	string showPlayerName(const int player) const;
 	void dealCard(const int player);
