@@ -2,25 +2,26 @@
 
 Game::Game() {
 	this->shuffleDeck = new int[52];
+	this->P = new Player*[2];
 	this->nrOfDealedCards = 0;
 	this->nrOfplayers = 0;
+	for (int i = 0; i < 2; i++) {
+		this->P[i] = new Player();
+	}
 	shuffleCards();
 }
 
 Game::~Game() {
 	delete this->shuffleDeck;
+	for (int i = 0; i < 2; i++) {
+		delete this->P[i];
+	}
+	delete this->P;
 }
 
-void Game::setPlayerInfo(const int player, const string &name, const int money)
+void Game::setPlayerInfo(const int player, const string &name)
 {
-	if (player == 1) {
-		this->Pone.setName(name);
-		this->Pone.setCM(money);
-	}
-	else {
-		this->Ptwo.setName(name);
-		this->Ptwo.setCM(money);
-	}
+	this->P[player]->setName(name);
 }
 
 void Game::setnrOfPlayer(const int NOP){
@@ -28,12 +29,7 @@ void Game::setnrOfPlayer(const int NOP){
 }
 
 void Game::setplayerMoney(const int player, const int money) {
-	if (player == 1) {
-		Pone.setCM(money);
-	}
-	else {
-		Ptwo.setCM(money);
-	}
+	this->P[player]->setCM(money);
 }
 
 int Game::getnrOfPlayer() const {
@@ -41,19 +37,11 @@ int Game::getnrOfPlayer() const {
 }
 
 int Game::getPlayerNOC(const int player) const {
-	int nrofCards = Ptwo.getNOC();
-	if (player == 1) {
-		nrofCards = Pone.getNOC();
-	}
-	return nrofCards;
+	return 	this->P[player]->getNOC();;
 }
 
 int Game::getPlayerMoney(const int player) const {
-	int playermoney = Ptwo.getCM();
-	if (player == 1) {
-		playermoney = Pone.getCM();
-	}
-	return playermoney;
+	return 	this->P[player]->getCM();
 }
 
 int* Game::shuffleCards() {
@@ -85,63 +73,36 @@ bool Game::duplicate(const int * Deck, const int size, const int nrTCheck) const
 string Game::showCards(const int player) const
 {
 	stringstream output;
-	if (player == 1) {
-		int *holder = this->Pone.getHand();
-		for (int i = 0; i < this->Pone.getNOC(); i++) {
-			output << this->gameDeck.toString(this->shuffleDeck[holder[i]]);
-		}
-	}
-	else {
-		int *holder = this->Ptwo.getHand();
-		for (int i = 0; i < this->Ptwo.getNOC(); i++) {
-			output << this->gameDeck.toString(this->shuffleDeck[holder[i]]);
-		}
+	int *holder = this->P[player]->getHand();
+	for (int i = 0; i < this->P[player]->getNOC(); i++) {
+		output << this->gameDeck.toString(this->shuffleDeck[holder[i]]);
 	}
 	return output.str();
 }
 
 string Game::showPlayerName(const int player) const {
-	string name = "";
-	if (player == 1) {
-		name = Pone.getName();
-	}
-	else {
-		name = Ptwo.getName();
-	}
-	return name;
+	return this->P[player]->getName();
 }
 
 void Game::dealCard(const int player) {
 	if (nrOfDealedCards < 52) {
-		if (player == 1) {
-			this->Pone.setHand(nrOfDealedCards++);
-		}
-		else {
-			this->Ptwo.setHand(nrOfDealedCards++);
-		}
+		this->P[player]->setHand(nrOfDealedCards++);
 	}
 }
 
 void Game::resetGame() {
-	this->Pone.setNOC(0);
-	this->Ptwo.setNOC(0);
+	for (int i = 0; i < 2; i++) {
+		this->P[i]->setNOC(0);
+	}
 	this->nrOfDealedCards = 0;
 	shuffleCards();
 }
 
 int Game::TotPoints(const int player){
 	int totPoints = 0;
-	if (player == 1) {
-		int *holder = this->Pone.getHand();
-		for (int i = 0; i < this->Pone.getNOC(); i++) {
-			totPoints = caculatePoints(totPoints, this->gameDeck.getValue(this->shuffleDeck[holder[i]]));
-		}
-	}
-	else {
-		int *holder = this->Ptwo.getHand();
-		for (int i = 0; i < this->Ptwo.getNOC(); i++) {
-			totPoints = caculatePoints(totPoints, this->gameDeck.getValue(this->shuffleDeck[holder[i]]));
-		}
+	int *holder = this->P[player]->getHand();
+	for (int i = 0; i < this->P[player]->getNOC(); i++) {
+		totPoints = caculatePoints(totPoints, this->gameDeck.getValue(this->shuffleDeck[holder[i]]));
 	}
 	return totPoints;
 }

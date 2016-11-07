@@ -8,13 +8,11 @@
 class Game {
 
 private:
-
+	Player **P;
 	Deck gameDeck;
 	int *shuffleDeck;
 	int nrOfDealedCards;
 	int nrOfplayers;
-	Player Pone;
-	Player Ptwo;
 	int* shuffleCards();
 	bool duplicate(const int* Deck, const int size, const int nrTCheck) const;
 
@@ -22,7 +20,7 @@ public:
 
 	Game();
 	~Game();
-	void setPlayerInfo(const int player, const string &name, const int money);
+	void setPlayerInfo(const int player, const string &name);
 	void setnrOfPlayer(const int NOP);
 	void setplayerMoney(const int player, const int money);
 	int getnrOfPlayer() const;

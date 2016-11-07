@@ -20,7 +20,7 @@ public:
 
 	Player();
 	Player(const string &name, const int currentMoney);
-	virtual ~Player();
+	~Player();
 
 	void setName(const string &name);
 	void setNOC(const int nrOfCards);
