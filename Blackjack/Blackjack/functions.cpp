@@ -83,14 +83,19 @@ void detectLoseWin(Game &game) {
 	int dp = game.DeaPoints();
 	for (int i = 0; i < game.getnrOfPlayer(); i++) {
 		int points = game.TotPoints(i);
-		if (dp < 22 && points > 15 && points < 21 && points > dp) {
-			game.setplayerMoney(i, game.getPlayerMoney(i) + 200);
-		}
-		else if (points == 21) {
-			game.setplayerMoney(i, game.getPlayerMoney(i) + 400);
+		if (points > 21) {
+			game.setplayerMoney(i, game.getPlayerMoney(i) - 200);
 		}
 		else {
-			game.setplayerMoney(i, game.getPlayerMoney(i) - 200);
+			if (points > 15 && (points > dp || dp > 21)) {
+				game.setplayerMoney(i, game.getPlayerMoney(i) + 200);
+			}
+			else if (points == 21) {
+				game.setplayerMoney(i, game.getPlayerMoney(i) + 400);
+			}
+			else {
+				game.setplayerMoney(i, game.getPlayerMoney(i) - 200);
+			}
 		}
 		cout << "[" << game.showPlayerName(i) << "] ";
 		cout << game.getPlayerMoney(i) << "$ ";
