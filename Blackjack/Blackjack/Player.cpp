@@ -3,7 +3,7 @@
 Player::Player() {
 	this->name = "Unknown";
 	this->nrOfCards = 0;
-	this->currentMoney = 0;
+	this->currentMoney = 400;
 	this->hand = new int[5];
 }
 

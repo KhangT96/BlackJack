@@ -13,7 +13,7 @@ Game::Game() {
 
 Game::~Game() {
 	delete this->shuffleDeck;
-	for (int i = 0; i < 2; i++) {
+	for (int i = 0; i < this->nrOfplayers; i++) {
 		delete this->P[i];
 	}
 	delete this->P;
@@ -42,6 +42,10 @@ int Game::getPlayerNOC(const int player) const {
 
 int Game::getPlayerMoney(const int player) const {
 	return 	this->P[player]->getCM();
+}
+
+int Game::getDealerNOC() const {
+	return this->Dealer.getNOC();
 }
 
 int* Game::shuffleCards() {
@@ -84,16 +88,28 @@ string Game::showPlayerName(const int player) const {
 	return this->P[player]->getName();
 }
 
-void Game::dealCard(const int player) {
-	if (nrOfDealedCards < 52) {
-		this->P[player]->setHand(nrOfDealedCards++);
+string Game::showDealer() const {
+	stringstream output;
+	int *holder = this->Dealer.getHand();
+	for (int i = 0; i < this->Dealer.getNOC(); i++) {
+		output << this->gameDeck.toString(this->shuffleDeck[holder[i]]);
 	}
+	return output.str();
+}
+
+void Game::dealCard(const int player) {
+	this->P[player]->setHand(nrOfDealedCards++);
+}
+
+void Game::dealDealer() {
+	this->Dealer.setHand(nrOfDealedCards++);
 }
 
 void Game::resetGame() {
 	for (int i = 0; i < 2; i++) {
 		this->P[i]->setNOC(0);
 	}
+	this->Dealer.setNOC(0);
 	this->nrOfDealedCards = 0;
 	shuffleCards();
 }
@@ -102,6 +118,15 @@ int Game::TotPoints(const int player){
 	int totPoints = 0;
 	int *holder = this->P[player]->getHand();
 	for (int i = 0; i < this->P[player]->getNOC(); i++) {
+		totPoints = caculatePoints(totPoints, this->gameDeck.getValue(this->shuffleDeck[holder[i]]));
+	}
+	return totPoints;
+}
+
+int Game::DeaPoints() {
+	int totPoints = 0;
+	int *holder = this->Dealer.getHand();
+	for (int i = 0; i < this->Dealer.getNOC(); i++) {
 		totPoints = caculatePoints(totPoints, this->gameDeck.getValue(this->shuffleDeck[holder[i]]));
 	}
 	return totPoints;
@@ -122,4 +147,25 @@ int Game::caculatePoints(const int totPoints, const int currentvalue) {
 		}
 	}
 	return Points;
+}
+
+void Game::checkPlayerLose() {
+	if (this->nrOfplayers == 2) {
+		if (this->P[0]->getCM() < 0) {
+			delete this->P[0];
+			this->P[0] = this->P[1];
+			this->nrOfplayers--;
+		}
+		if (this->P[1]->getCM() < 0) {
+			delete this->P[1];
+			this->nrOfplayers--;
+		}
+	}
+	else {
+		if (this->P[0]->getCM() < 0) {
+			delete this->P[0];
+			this->nrOfplayers--;
+		}
+	}
+	resetGame();
 }

@@ -3,10 +3,17 @@
 void start() {
 	Game game;
 	playerInfo(game);
+	do {
+		playing(game);
+		system("pause");
+	} while (game.getnrOfPlayer() > 0);
+}
+
+void playing(Game & game) {
 	dealing(game);
 	detectLoseWin(game);
-
 }
+
 
 void playerInfo(Game &game) {
 	int nrOfPlayers = 0;string name = "";
@@ -29,6 +36,7 @@ void dealing(Game &game){
 		game.dealCard(i);
 		game.dealCard(i);
 	}
+	game.dealDealer();
 	showPCards(game);
 	for (int i = 0; i < game.getnrOfPlayer(); i++) {
 		stop = false;
@@ -47,32 +55,47 @@ void dealing(Game &game){
 			showPCards(game);
 		}
 	}
+	for (int k = game.getDealerNOC(); k < 5; k++) {
+		if (game.DeaPoints() < 16) {
+			cout << "[Dealer]" << endl;
+			game.dealDealer();
+			showPCards(game);
+			system("pause");
+		}
+	}
 	system("pause");
 }
 
 void showPCards(Game &game) {
 	system("cls");
+	cout << "[Dealer]" << endl;
+	cout << game.showDealer();
+	cout << "[Points] " << game.DeaPoints() << endl << endl;
 	for (int i = 0; i < game.getnrOfPlayer(); i++) {
 		cout << "[" << game.showPlayerName(i) << "]" << endl;
 		cout << game.showCards(i); 
-		cout << "[Points] " << game.TotPoints(i) << endl;
+		cout << "[Points] " << game.TotPoints(i) << endl << endl;
 	}
 }
 
 void detectLoseWin(Game &game) {
 	system("cls");
+	int dp = game.DeaPoints();
 	for (int i = 0; i < game.getnrOfPlayer(); i++) {
 		int points = game.TotPoints(i);
-		if (points > 15 && points < 21) {
-			game.setplayerMoney(i, game.getPlayerMoney(i) + 100);
+		if (dp < 22 && points > 15 && points < 21 && points > dp) {
+			game.setplayerMoney(i, game.getPlayerMoney(i) + 200);
 		}
 		else if (points == 21) {
-			game.setplayerMoney(i, game.getPlayerMoney(i) + 300);
+			game.setplayerMoney(i, game.getPlayerMoney(i) + 400);
 		}
 		else {
-			game.setplayerMoney(i, game.getPlayerMoney(i) - 100);
+			game.setplayerMoney(i, game.getPlayerMoney(i) - 200);
 		}
 		cout << "[" << game.showPlayerName(i) << "] ";
-		cout << game.getPlayerMoney(i) << "$\n";
+		cout << game.getPlayerMoney(i) << "$ ";
+		cout << "[Points] " << game.TotPoints(i) << endl << endl;
 	}
+	cout << "[Points] " << game.DeaPoints() << endl << endl;
+	game.checkPlayerLose();
 }

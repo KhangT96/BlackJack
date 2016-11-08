@@ -9,6 +9,7 @@ class Game {
 
 private:
 	Player **P;
+	Player Dealer;
 	Deck gameDeck;
 	int *shuffleDeck;
 	int nrOfDealedCards;
@@ -26,12 +27,17 @@ public:
 	int getnrOfPlayer() const;
 	int getPlayerNOC(const int player) const;
 	int getPlayerMoney(const int player) const;
+	int getDealerNOC() const;
 	string showCards(const int player) const;
 	string showPlayerName(const int player) const;
+	string showDealer() const;
 	void dealCard(const int player);
+	void dealDealer();
 	void resetGame();
 	int TotPoints(const int player);
+	int DeaPoints();
 	int caculatePoints(const int totPoints, const int currentvalue);
+	void checkPlayerLose();
 
 
 };

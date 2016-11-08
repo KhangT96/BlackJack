@@ -3,6 +3,7 @@
 #include <time.h>  
 
 void start();
+void playing(Game &game);
 void playerInfo(Game &game);
 void dealing(Game &game);
 void showPCards(Game &game);
