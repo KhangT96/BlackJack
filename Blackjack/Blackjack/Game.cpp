@@ -19,6 +19,10 @@ Game::~Game() {
 	delete this->P;
 }
 
+void Game::onePlayer() {
+	delete this->P[1];
+}
+
 void Game::setPlayerInfo(const int player, const string &name)
 {
 	this->P[player]->setName(name);

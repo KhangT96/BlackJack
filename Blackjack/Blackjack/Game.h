@@ -21,6 +21,7 @@ public:
 
 	Game();
 	~Game();
+	void onePlayer();
 	void setPlayerInfo(const int player, const string &name);
 	void setnrOfPlayer(const int NOP);
 	void setplayerMoney(const int player, const int money);

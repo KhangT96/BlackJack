@@ -20,6 +20,9 @@ void playerInfo(Game &game) {
 	cout << "How many player?[1 or 2]\n";
 	cin >> nrOfPlayers; game.setnrOfPlayer(nrOfPlayers);
 	cin.ignore();
+	if (nrOfPlayers == 1) {
+		game.onePlayer();
+	}
 	for (int i = 0; i < nrOfPlayers; i++) {
 		system("cls");
 		cout << "Player " << i + 1 << " name?\n";
